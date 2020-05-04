@@ -1,0 +1,39 @@
+<section class="foot">
+    <p>version 1.0.0</p>
+    <p>Powered by 姜康</p>
+    <p>联系方式：15972132468</p>
+    <div class="cpu_temp">CPU温度 <span id="cpu_temp"></span> ℃</div>
+</section>
+
+<div class="power-panel" id="power-panel">
+    <a class="btn icon-poweroff" href = "/poweroff">关机</a>
+    <a class="btn icon-reboot" href = "/reboot">重启</a>
+</div>
+
+<script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js')}}"></script>
+<script src="{{ url_for('static', filename='js/get_cpu_temp.js')}}"></script>
+<script>
+    var content = "<div class='panel-bg'></div>";
+    $(".poweroff").click(function(){
+        var OH = $(".power-panel").outerHeight();
+        var OW = $(".power-panel").outerWidth();
+        OH = OH/2;
+        OW = OW/2;
+        $(".power-panel").css({"margin-left":"-"+ OW +"px","margin-top":"-"+ OH +"px"});
+        
+        
+        
+        $(".power-panel").show();
+        $(".power-panel").after(content);
+        
+            $(".panel-bg").click(function(){
+            $(".power-panel").hide();
+            $(this).remove();
+        });
+        
+    });
+    
+    
+</script>
+</body>
+</html>

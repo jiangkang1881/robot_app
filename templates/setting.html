@@ -1,0 +1,160 @@
+{% include 'start.html' %}
+{% include 'head.html' %}
+
+   
+    <style>
+        .robot {
+            float: left;
+            margin-left: 5%;
+            margin-right: 20px;
+            max-width: 25%;
+            padding-right: 20px;
+            border-right: 1px solid #d8d8d8;
+            box-shadow: -1px 0px 0px #FFF inset;
+        }
+
+        circle {
+            fill: #FFF;
+            stroke: #cbcbcb;
+            stroke-width: 3;
+        }
+
+        path {
+            fill: #FFF;
+            stroke: #b3b3b3;
+            stroke-width: 3;
+        }
+
+        circle,
+        path {
+            cursor: pointer;
+
+        }
+
+        .is_active {
+            fill: #76efff;
+            stroke: #46c3d4;
+            stroke-width: 3;
+        }
+
+        .menu {
+            padding: 10px;
+            margin: 20px 0 0 0;
+            width: 60%;
+            float: left;
+            list-style: none;
+        }
+
+        .menu>li {
+            line-height:2em;
+            display: none;
+            padding: 20px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .menu_active {
+            display: block !important;
+        }
+        
+        .opt-btn>a{
+            background: #ffffff;
+            display: inline-block;
+            padding: 0 15px;
+            border: 1px solid #c5c5c5;
+            border-right-width: 0px;
+            cursor: pointer;
+        }
+        .opt-btn>a:last-child{
+            border-right-width:1px;
+        }
+        .opt-btn>a:hover{
+            background:#EAEAEA;
+        }
+        
+        .opt-btn>a:active{
+            background: #118dab;
+            border-color: #027288;
+        }
+        
+    </style>
+
+
+    <svg class="robot" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="290px" height="435px" viewBox="59 97 231 330"
+        enable-background="new 0 0 350 550" xml:space="preserve">
+        <path class="head" d="M221.089,136.477
+    c-3.854-25.314-27.068-38.695-49.248-38.695s-45.394,13.381-49.248,38.695c-4.494,29.513-6.733,53.779,49.248,53.779
+    S225.583,165.99,221.089,136.477z" />
+        <g class="eyes">
+            <circle cx="194.419" cy="139.865" r="14.229" />
+            <circle cx="149.262" cy="139.865" r="14.229" />
+        </g>
+
+        <path class="left_arm" d="M231.581,261.702c10.821,21.043,20.259,36.831,28.313,45.739
+    c21.4,23.669,5.732-44.236-4.723-66.707c-12.35-26.543-23.936-34.597-35.526-34.143C206.176,207.118,224.993,248.89,231.581,261.702
+    z" />
+
+        <path class="right_arm"
+            d="M112.1,261.702c-10.821,21.043-20.259,36.831-28.313,45.739
+    c-21.4,23.669-5.732-44.236,4.723-66.707c12.35-26.543,23.936-34.597,35.526-34.143C137.505,207.118,118.689,248.89,112.1,261.702z" />
+
+        <path class="body" d="M172.841,193.755
+    c-39.749,0-48.708,11.556-48.708,36.505c0,51.521,5.892,72.651,48.708,74.289c42.817-1.638,48.708-22.768,48.708-74.289
+    C221.549,205.311,212.59,193.755,172.841,193.755z" />
+
+        <path class="left_leg" d="M120.525,354.435
+    c6.216,20.011,22.499,82.291,36.215,65.018c10.853-13.666,7.423-66.866-1.834-97.379c-5.165-17.022-15.3-46.199-29.751-28.021
+    C116.731,304.651,113.16,330.725,120.525,354.435z" />
+        <path class="right_leg" d="M225.157,354.435
+    c-6.216,20.011-22.499,82.291-36.215,65.018c-10.853-13.666-7.423-66.866,1.834-97.379c5.165-17.022,15.3-46.199,29.751-28.021
+    C228.951,304.651,232.522,330.725,225.157,354.435z" />
+
+    </svg>
+
+    <ul class="menu">
+        <li class="head menu_active">
+            <h2>头部控制单元 / Head</h2>
+            <p>本区块控制扭头及嘴巴的运动</p>
+            
+            <div class="opt-btn">
+                <a>-</a><a>居中</a><a>+</a>
+            </div>
+            <button>舵机复位</button>
+        </li>
+        <li class="eyes">
+            <h2>眼部控制单元 / Eyes</h2>
+            <p>本区块控制眨眼</p>
+        
+        </li>
+        <li class="left_arm">左臂控制单元 / Left arm</li>
+        <li class="right_arm">右臂控制单元 / Right arm</li>
+        <li class="body">身体控制单元 / Body</li>
+        <li class="left_leg">左腿控制单元 / Left leg</li>
+        <li class="right_leg">右腿控制单元 / Right leg</li>
+    </ul>
+    <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js')}}"></script>
+    <script>
+        var robot = $('.robot').children();
+
+        robot.click(function () {
+
+            $(this).addClass("is_active");
+            $(this).children().addClass("is_active");
+            $(this).siblings().removeClass("is_active");
+            $(this).siblings().children().removeClass("is_active");
+            var cls = $(this).attr("class"); //获取类名
+
+            cls = cls.replace('is_active', ''); //清空active类名
+            cls = cls.replace(' ', ''); //获取另外一个类名
+            console.log(".menu>." + cls);
+
+            $(".menu>." + cls).addClass("menu_active");
+            $(".menu>." + cls).siblings().removeClass("menu_active");
+
+        });
+
+    </script>
+
+
+{% include 'end.html' %}

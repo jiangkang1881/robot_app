@@ -1,0 +1,7 @@
+{
+"sound2": "/home/pi/robot_app/static/sound/sound2.wav",
+"sound4": "/home/pi/robot_app/static/sound/4fan.wav",
+"sound3": "/home/pi/robot_app/static/sound/3boing.wav",
+"sound5": "/home/pi/robot_app/static/sound/5fanfare.wav",
+"sound1": "/home/pi/robot_app/static/sound/sound1.wav"
+}
